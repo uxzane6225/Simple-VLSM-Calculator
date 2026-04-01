@@ -247,15 +247,24 @@ function getRange() {
             thirdUsable = newthirdOctet - 1;
             forthUsable = 255;
         }
+        else if (newforthOctet > 0) {
+            thirdUsable = newthirdOctet -1;
+        }
     }
     else if (nsm > 8) {
         if (newthirdOctet == 0) {
             secondUsable = newsecondOctet - 1;
             thirdUsable = 255;
         }
+        else if (newthirdOctet > 0) {
+            secondUsable = newsecondOctet -1;
+        }
 
         if (newforthOctet == 0) {
             forthUsable = 255;
+        }
+        else if (newforthOctet > 0) {
+            forthUsable = newforthOctet - 1;
         }
     }
     else if (nsm > 0) {
@@ -264,13 +273,22 @@ function getRange() {
             firstUsable = newfirstOctet - 1;
             secondUsable = 225
         }
+        else if (newsecondOctet > 0) {
+            firstUsable = newfirstOctet -1;
+        }
 
         if (newthirdOctet == 0) {
             thirdUsable = 255;
         }
+        else if (newthirdOctet > 0) {
+            forthUsable = newforthOctet - 1;
+        }
 
         if (newforthOctet == 0) {
             forthUsable = 255;
+        }
+        else if (newforthOctet > 0) {
+            forthUsable = newforthOctet - 1;
         }
     }
 
