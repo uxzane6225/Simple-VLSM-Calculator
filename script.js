@@ -2,7 +2,6 @@ let firstOctet = 0;
 let secondOctet = 0;
 let thirdOctet = 0;
 let forthOctet = 0;
-let ip = [firstOctet, secondOctet, thirdOctet, forthOctet];
 let subnetMask = 0;
 let host = 0;
 
@@ -37,11 +36,40 @@ document.getElementById("submit").onclick = function() {
     subnetMask = document.getElementById("subnetMask").value;
     host = document.getElementById("host").value;
 
+    if (!checkEmpty(firstOctet, secondOctet, thirdOctet, forthOctet, subnetMask, host)) {
+        alert("Please fill every field!");
+        return;
+    }
+
+    if (!checkRange(firstOctet, secondOctet, thirdOctet, forthOctet, subnetMask, host)) {
+        alert("Each octet has a limit of 0 - 255, a subnet mask has a limit of 0-32, and the host can't be less than 0");
+        return;
+    }
+
     nsm = getNSM(sequence, host);
     lsm = getLSM(nsm);
     nextIP = getNextIP(nsm, increment);
     secondIP = getRange();
 
+    display();
+    clear();
+}
+
+function checkEmpty(firstOctet, secondOctet, thirdOctet, forthOctet, subnetMask, host) {
+    if ((firstOctet == "" || firstOctet == null) || (secondOctet == "" || secondOctet == null) || (thirdOctet == "" || thirdOctet == null) || (forthOctet == "" || forthOctet == null) || (subnetMask == "" || subnetMask == null) || host == "" || host == null) {
+        return false;
+    }
+    return true;
+}
+
+function checkRange(firstOctet, secondOctet, thirdOctet, forthOctet, subnetMask, host) {
+    if ((firstOctet > 255 || firstOctet < 0) || (secondOctet > 255 || secondOctet < 0) || (thirdOctet > 255 || thirdOctet < 0) || (forthOctet > 255 || forthOctet < 0) || (subnetMask > 32 || subnetMask < 0) || host < 0) {
+        return false;
+    }
+    return true;
+}
+
+function display() {
     document.getElementById("ipResult").textContent =`IP Address: ${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet} /${subnetMask}`;
     document.getElementById("hostResult").textContent = `Host: ${host}`;
     document.getElementById("bits").textContent = `Bits: ${bits}`;
@@ -52,7 +80,28 @@ document.getElementById("submit").onclick = function() {
     document.getElementById("nextIP").textContent = `Next IP: ${nextIP}`;
 }
 
+
 document.getElementById("clear").onclick = function() {
+    document.getElementById("1stOctet").value = "";
+    document.getElementById("2ndOctet").value = "";
+    document.getElementById("3rdOctet").value = "";
+    document.getElementById("4thOctet").value = "";
+    document.getElementById("subnetMask").value = "";
+    document.getElementById("host").value = "";
+
+    document.getElementById("ipResult").textContent =`IP Address:`;
+    document.getElementById("hostResult").textContent = `Host:`;
+    document.getElementById("bits").textContent = `Bits:`;
+    document.getElementById("nsm").textContent = `New Subnet Mask:`;
+    document.getElementById("lsm").textContent = `Long Subnet Mask:`;
+    document.getElementById("inc").textContent = `Increment:`;
+    document.getElementById("1stRange").textContent = `Range:`;
+    document.getElementById("nextIP").textContent = `Next IP:`;
+
+    clear();
+}
+
+function clear() {
     firstOctet = 0;
     secondOctet = 0;
     thirdOctet = 0;
@@ -74,15 +123,6 @@ document.getElementById("clear").onclick = function() {
     firstIP = 0;
     secondIP = 0;
     nextIP = 0;
-
-    document.getElementById("ipResult").textContent =`IP Address:`;
-    document.getElementById("hostResult").textContent = `Host:`;
-    document.getElementById("bits").textContent = `Bits:`;
-    document.getElementById("nsm").textContent = `New Subnet Mask:`;
-    document.getElementById("lsm").textContent = `Long Subnet Mask:`;
-    document.getElementById("inc").textContent = `Increment:`;
-    document.getElementById("1stRange").textContent = `Range:`;
-    document.getElementById("nextIP").textContent = `Next IP:`;
 }
 
 function getNSM(sequence, host) {
@@ -240,7 +280,9 @@ function getRange() {
     firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
 
     if (nsm > 24) {
-        forthUsable = newforthOctet - 1;
+        if (newforthOctet > 0) {
+            forthUsable = newforthOctet - 1;
+        }
     }
     else if (nsm > 16) {
         if (newforthOctet == 0) {
