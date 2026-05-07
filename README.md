@@ -1,5 +1,6 @@
 # Simple-VLSM-Calculator
 A simple VLSM calculator that shows the following results: bits, new subnet mask, long form of the subnet mask, increment, range, and the next IP. link: https://uxzane6225.github.io/Simple-VLSM-Calculator/
+(Disclaimer: The VLSM Calculator may be inaccurate, imporvements are still being developed).
 
 # Instruction:
 1. Fill in each octet from 0-255.
