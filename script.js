@@ -1,3 +1,4 @@
+let ipAddress = 0;
 let firstOctet = 0;
 let secondOctet = 0;
 let thirdOctet = 0;
@@ -5,8 +6,8 @@ let forthOctet = 0;
 let subnetMask = 0;
 let host = 0;
 
+
 let sequence = 1;
-//let sequence1 = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
 let sequence2 = [128, 64, 32, 16, 8, 4, 2, 1];
 let bits = 0;
 let nsm = 0;
@@ -18,15 +19,26 @@ let forthLSM = 0;
 let lsm = 0;
 
 let increment = 0;
-let firstIP = 0;
-let secondIP = 0;
+let firstIP
+let gatewayIP = 0;
+let broadcast = 0;
+let usable = 0;
 let nextIP = 0;
+
+let firstBroadcast = 0;
+let secondBroadcast = 0;
+let thirdBroadcast = 0;
+let forthBroadcast = 0;
+
+let firstGateway = 0
+let secondGateway = 0
+let thirdGateway = 0
+let forthGateway = 0
 
 let newfirstOctet = 0;
 let newsecondOctet = 0;
 let newthirdOctet = 0;
 let newforthOctet = 0;
-
 
 document.getElementById("submit").onclick = function() {
     firstOctet = document.getElementById("1stOctet").value;
@@ -46,10 +58,13 @@ document.getElementById("submit").onclick = function() {
         return;
     }
 
+    ipAddress = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
     nsm = getNSM(sequence, host);
     lsm = getLSM(nsm);
-    nextIP = getNextIP(nsm, increment);
-    secondIP = getRange();
+    nextIP = getNextIP(increment);
+    //gatewayIP = getGateway(firstOctet, secondOctet, thirdOctet, forthOctet);
+    broadcast = getBroadcast();
+    usable = getUsable();
 
     display();
     clear();
@@ -70,13 +85,15 @@ function checkRange(firstOctet, secondOctet, thirdOctet, forthOctet, subnetMask,
 }
 
 function display() {
-    document.getElementById("ipResult").textContent =`IP Address: ${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet} /${subnetMask}`;
+    document.getElementById("ipResult").textContent =`IP Address: ${ipAddress} /${subnetMask}`;
     document.getElementById("hostResult").textContent = `Host: ${host}`;
     document.getElementById("bits").textContent = `Bits: ${bits}`;
     document.getElementById("nsm").textContent = `New Subnet Mask: /${nsm}`;
     document.getElementById("lsm").textContent = `Long Subnet Mask: ${lsm}`;
     document.getElementById("inc").textContent = `Increment: ${increment}`;
-    document.getElementById("1stRange").textContent = `Range: ${firstIP} - ${secondIP}`;
+    //document.getElementById("network").textContent = `Network: ${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
+    document.getElementById("range").textContent = `Range: ${usable}`;
+    document.getElementById("broadcast").textContent = `Broadcast: ${broadcast}`;
     document.getElementById("nextIP").textContent = `Next IP: ${nextIP}`;
 }
 
@@ -95,7 +112,7 @@ document.getElementById("clear").onclick = function() {
     document.getElementById("nsm").textContent = `New Subnet Mask:`;
     document.getElementById("lsm").textContent = `Long Subnet Mask:`;
     document.getElementById("inc").textContent = `Increment:`;
-    document.getElementById("1stRange").textContent = `Range:`;
+    document.getElementById("range").textContent = `Range:`;
     document.getElementById("nextIP").textContent = `Next IP:`;
 
     clear();
@@ -120,8 +137,8 @@ function clear() {
 
     increment = 0;
 
-    firstIP = 0;
-    secondIP = 0;
+    gatewayIP = 0;
+    broadcast = 0;
     nextIP = 0;
 }
 
@@ -155,79 +172,6 @@ function getLSM(nsm) {
     console.log(forthLSM);
     console.log(nsm);
 
-
-    /*if (nsm > 8) {
-        for (let i = 0; i < sequence2.length; i++) {
-            firstLSM += sequence2[i];
-            increment = sequence2[i];
-        }
-    }
-    else {
-        for (let i = 0; i < nsm; i++) {
-            if (i < nsm) {
-                firstLSM += sequence2[i];
-                increment = sequence2[i];
-            }
-        }
-    }
-    nsm -=8;
-    console.log(firstLSM);
-    console.log(nsm);
-
-    if (nsm > 8) {
-        for (let i = 0; i < sequence2.length; i++) {
-            secondLSM += sequence2[i];
-            increment = sequence2[i];
-        }
-    }
-    else {
-        for (let i = 0; i < nsm; i++) {
-            if (i < nsm) {
-                secondLSM += sequence2[i];
-                increment = sequence2[i];
-            }
-        }
-    }
-    nsm -= 8;
-    console.log(secondLSM);
-    console.log(nsm);
-
-    if (nsm > 8) {
-        for (let i = 0; i < sequence2.length; i++) {
-            thirdLSM += sequence2[i];
-            increment = sequence2[i];
-        }
-    }
-    else {
-        for (let i = 0; i < nsm; i++) {
-            if (i < nsm) {
-                thirdLSM += sequence2[i];
-                increment = sequence2[i];
-            }
-        }
-    }
-    nsm -= 8;
-    console.log(thirdLSM);
-    console.log(nsm);
-    
-    if (nsm > 8) {
-        for (let i = 0; i < sequence2.length; i++) {
-            forthLSM += sequence2[i];
-            increment = sequence2[i];
-        }
-    }
-    else {
-        for (let i = 0; i < nsm; i++) {
-            if (i < nsm) {
-                forthLSM += sequence2[i];
-                increment = sequence2[i];
-            }
-        }
-    }
-    nsm -= 8;
-    console.log(forthLSM);
-    console.log(nsm);*/
-
     return `${firstLSM}.${secondLSM}.${thirdLSM}.${forthLSM}`
 }
 
@@ -250,142 +194,187 @@ function getOctet(octet, nsm) {
     }
 }
 
-function getNextIP(nsm, increment) {
+function getNextIP(increment) {
     newfirstOctet = Number(firstOctet);
     newsecondOctet = Number(secondOctet);
     newthirdOctet = Number(thirdOctet);
     newforthOctet = Number(forthOctet);
 
-    if (firstLSM < 255) {
-        newfirstOctet += increment;
-    }
-    else if (secondLSM < 255) {
-        newsecondOctet += increment;
-    }
-    else if (thirdLSM < 255) {
-        newthirdOctet += increment;
-    }
-    else if (forthLSM < 255) {
+    if (nsm > 24) {
         newforthOctet += increment;
     }
+    else if (nsm > 16) {
+        newthirdOctet += increment;
+    }
+    else if (nsm > 8) {
+        newsecondOctet += increment;
+    }
+    else if (nsm > 0) {
+        newfirstOctet += increment;
+    }
+
    return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
 }
 
-function getRange() {
-    let firstUsable = firstOctet;
-    let secondUsable = secondOctet;
-    let thirdUsable = thirdOctet;
-    let forthUsable = forthOctet;
+/*function getGateway(fisrtOctet, secondOctet, thirdOctet, forthOctet) {
+    firstGateway = Number(firstOctet);
+    secondGateway = Number(secondOctet);
+    thirdGateway = Number(thirdOctet);
+    forthGateway = Number(forthOctet);
+
+    if (nsm > 24) {
+        if (forthOctet >= 0) {
+            forthGateway += 1;
+        }
+    }
+    else if (nsm > 16) {
+        if (thirdOctet >= 0) {
+            thirdGateway += 1;
+        }
+    }
+    else if (nsm > 8) {
+        if (secondOctet >= 0) {
+            secondGateway += 1;
+        }
+    }
+    else if (nsm > 0) {
+        if (firstOctet >= 0) {
+            firstGateway += 1;
+        }
+    }
+    return `${firstGateway}.${secondGateway}.${thirdGateway}.${forthGateway}`;
+}*/
+
+function getBroadcast() {
+    firstBroadcast = firstOctet;
+    secondBroadcast = secondOctet;
+    thirdBroadcast = thirdOctet;
+    forthBroadcast = forthOctet;
 
     firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
 
     if (nsm > 24) {
         if (newforthOctet > 0) {
-            forthUsable = newforthOctet - 1;
+            forthBroadcast = newforthOctet - 1;
         }
     }
     else if (nsm > 16) {
         if (newforthOctet == 0) {
-            thirdUsable = newthirdOctet - 1;
-            forthUsable = 255;
+            thirdBroadcast = newthirdOctet - 1;
+            forthBroadcast = 255;
         }
         else if (newforthOctet > 0) {
-            thirdUsable = newthirdOctet -1;
+            thirdBroadcast = newthirdOctet -1;
         }
     }
     else if (nsm > 8) {
         if (newthirdOctet == 0) {
-            secondUsable = newsecondOctet - 1;
-            thirdUsable = 255;
+            secondBroadcast = newsecondOctet - 1;
+            thirdBroadcast = 255;
         }
         else if (newthirdOctet > 0) {
-            secondUsable = newsecondOctet -1;
+            secondBroadcast = newsecondOctet -1;
         }
 
         if (newforthOctet == 0) {
-            forthUsable = 255;
+            forthBroadcast = 255;
         }
         else if (newforthOctet > 0) {
-            forthUsable = newforthOctet - 1;
+            forthBroadcast = newforthOctet - 1;
         }
     }
     else if (nsm > 0) {
         
         if (newsecondOctet == 0) {
-            firstUsable = newfirstOctet - 1;
-            secondUsable = 225
+            firstBroadcast = newfirstOctet - 1;
+            secondBroadcast = 225
         }
         else if (newsecondOctet > 0) {
-            firstUsable = newfirstOctet -1;
+            firstBroadcast = newfirstOctet -1;
         }
 
         if (newthirdOctet == 0) {
-            thirdUsable = 255;
+            thirdBroadcast = 255;
         }
         else if (newthirdOctet > 0) {
-            forthUsable = newforthOctet - 1;
+            forthBroadcast = newforthOctet - 1;
         }
 
         if (newforthOctet == 0) {
-            forthUsable = 255;
+            forthBroadcast = 255;
         }
         else if (newforthOctet > 0) {
-            forthUsable = newforthOctet - 1;
+            forthBroadcast = newforthOctet - 1;
         }
     }
 
-    /*if (newsecondOctet < 1) {
-        firstUsable = newfirstOctet - 1;
-        secondUsable = 255;
-        thirdUsable = 255;
-        forthUsable = 255;
-    }
-    else if (newthirdOctet < 1 && forthOctet > 1) {
-        secondUsable = newsecondOctet - 1;
-        thirdUsable = 255;
-        forthUsable = 255;
-    }
-    else if (newforthOctet < 1) {
-        thirdUsable = newthirdOctet - 1;
-        forthUsable = 255;
-    }*/
+    return `${firstBroadcast}.${secondBroadcast}.${thirdBroadcast}.${forthBroadcast}`;
+}
 
-    return `${firstUsable}.${secondUsable}.${thirdUsable}.${forthUsable}`;
+function getUsable() {
+    let firstUsable1 = Number(firstOctet);
+    let secondUsable1 = Number(secondOctet);
+    let thirdUsable1 = Number(thirdOctet);
+    let forthUsable1 = Number(forthOctet);
 
+    let firstUsable2 = Number(firstBroadcast);
+    let secondUsable2 = Number(secondBroadcast);
+    let thirdUsable2 = Number(thirdBroadcast);
+    let forthUsable2 = Number(forthBroadcast);
 
-
-    /*if (nsm > 24) {
-        newforthOctet += increment;
-        firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
-        secondIP = `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet-1}`;
-        return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
+    if (nsm > 24) {
+        /*if (forthOctet >= 0) {
+            forthUsable1 += 1;
+        }*/
+       forthUsable1 += 1;
     }
     else if (nsm > 16) {
-        newthirdOctet += increment;
-        firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet} /${nsm}`;
-        if (newforthOctet > 0) {
-            secondIP = `${newfirstOctet}.${newsecondOctet}.${newthirdOctet-1}.${newforthOctet-1}`;
-        }
-        else {
-            
-        }
-        secondIP = `${newfirstOctet}.${newsecondOctet}.${newthirdOctet-1}.${newforthOctet = 255}`;
-        return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
+        /*if (thirdOctet >= 0) {
+            thirdUsable1 += 1;
+        }*/
+       forthUsable1 += 1;
     }
     else if (nsm > 8) {
-        newsecondOctet += increment;
-        firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
-        secondIP = `${newfirstOctet}.${newsecondOctet-1}.${newthirdOctet}.${newforthOctet}`;
-        return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
+        /*if (secondOctet >= 0) {
+            secondUsable1 += 1;
+        }*/
+        forthUsable1 += 1;
     }
     else if (nsm > 0) {
-        newfirstOctet += increment;
-        firstIP = `${firstOctet}.${secondOctet}.${thirdOctet}.${forthOctet}`;
-        secondIP = `${newfirstOctet-1}.${newsecondOctet = 255}.${newthirdOctet = 255}.${newforthOctet = 255}`;
-        return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
+        /*if (firstOctet >= 0) {
+            firstUsable1 += 1;
+        }*/
+        forthUsable1 += 1;
     }
-    else {
-        console.log("idk");
-        return `${newfirstOctet}.${newsecondOctet}.${newthirdOctet}.${newforthOctet}`;
-    }*/
+
+    if (nsm > 24) {
+        if (forthBroadcast >= 0) {
+            forthUsable2 -= 1;
+        }
+    }
+    else if (nsm > 16) {
+        /*if (thirdBroadcast >= 0) {
+            thirdUsable2 -= 1;
+        }*/
+
+        if (forthBroadcast == 0) {
+            thirdUsable2 -= 1;
+            forthUsable2 = 255;
+        }
+        else if (forthBroadcast > 0) {
+            forthUsable2 -= 1;
+        }
+    }
+    else if (nsm > 8) {
+        if (secondBroadcast >= 0) {
+            secondUsable2 -= 1;
+        }
+    }
+    else if (nsm > 0) {
+        if (firstBroadcast >= 0) {
+            firstUsable2 -= 1;
+        }
+    }
+
+    return `${firstUsable1}.${secondUsable1}.${thirdUsable1}.${forthUsable1} - ${firstUsable2}.${secondUsable2}.${thirdUsable2}.${forthUsable2} `
 }

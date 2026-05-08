@@ -1,4 +1,4 @@
-body {
+/*body {
     margin: 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #006DAA;
@@ -18,12 +18,12 @@ h1 {
     background-color: #0353A4;
 }
 
-.inputting {
+.inputContainer {
     margin-left: 10px;
     font-size: large;
 }
 
-.inputting input {
+.inputContainer input {
     text-align: center;
     width: 100px;
     margin-bottom: 10px;
@@ -58,14 +58,19 @@ hr {
     font-size: large;
 }
 
+.result p {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 600px) {
-    .inputting {
+    .inputContainer {
         margin-left: 10px;
         margin-right: 10px;
         display: grid;
     }
 
-    .inputting input {
+    .inputContainer input {
         text-align: center;
         width: 100%;
         height: 30px;
@@ -74,5 +79,308 @@ hr {
 
     #submit, #clear {
         padding: 5px;
+    }
+
+    .result {
+        font-size: larger;
+    }
+}*/
+
+/* { 
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 20px;
+    background-color: #454040;
+    color: #E6F082;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+.parentContainer {
+    margin: 0px;
+    background-color: #605B51;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: solid #E6F082;
+}
+
+.parentContainer h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inputContainer {
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer input, label, button{
+    margin: 2px 10px 2px 10px;
+}
+
+.inputContainer label {
+    font-weight: bolder;
+}
+
+.inputContainer input {
+    padding: 5px;
+    font-size: 20px;
+    background-color: #454040;
+    color: #E6F082;
+    outline: none;
+    border: none;
+    border-bottom: solid #E6F082;
+}
+
+.inputSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.buttonContainer button {
+    padding: 5px;
+    font-size: 20px;
+    background-color: #454040;
+    color: #E6F082;
+    border: none;
+    cursor: pointer;
+    border-bottom: solid #E6F082;
+}
+
+.buttonContainer button:hover {
+    background-color: hsl(0, 4%, 30%);
+}
+
+.result {
+    margin: 10px;
+}
+
+.result > * {
+    margin: 10px 0px 10px 0px;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 15px;
+        background-color: #454040;
+        color: #E6F082;
+    }
+    .parentContainer {
+        padding: 10px;
+        align-items: start;
+    }
+
+    .inputContainer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 5px;
+    }
+
+    .inputContainer input, label, button{
+        margin: 0px;
+    }
+
+    .inputContainer label {
+        margin-left: 10px;
+    }
+
+    .inputContainer input {
+        padding: 2px;
+        font-size: 15px;
+        margin: 0px 30px 5px 0px;
+    }
+
+    .buttonContainer {
+        padding: 10px 10px;
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .buttonContainer button {
+        width: 100px;
+        font-size: 15px;
+    }
+}*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #454040;
+    color: #E6F082;
+}
+
+
+
+/*----------------========[ Header ]========----------------*/
+
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+header img{
+    width: 50%;
+}
+
+header h1 {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 40px;
+}
+
+#instruction {
+    text-align: start;
+    margin: 0px 20px;
+}
+
+#instruction h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+
+
+/*----------------========[ Main ]========----------------*/
+
+
+/*--------==== [Input] ====--------*/
+
+.parentContainer {
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #605B51;
+    border-bottom: solid #E6F082;
+}
+
+.parentContainer h3 {
+    font-size: 25px;
+    text-align: center;
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputSection input {
+    padding: 5px;
+    background-color:#454040;
+    color: #E6F082;
+    border: none;
+    border-bottom: solid #E6F082;
+    outline: none;
+}
+
+.buttonContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buttonContainer button {
+    padding: 5px;
+    background-color: #454040;
+    color: #E6F082;
+    border: none;
+    border-bottom: solid #E6F082;
+    outline: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.buttonContainer button:hover {
+    background-color: hsl(0, 4%, 36%);
+}
+
+
+/*--------====[ Result ]====--------*/
+
+#result {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#result h2 {
+    font-size: 30px;
+}
+
+/*----------------========[ Main ]========----------------*/
+footer {
+    padding: 10px;
+    width: 100%;
+    background-color: #E6F082;
+    color: #454040;
+}
+
+footer p {
+    font-size: 15px;
+}
+
+@media (min-width: 1024px) {
+    
+    * {
+        font-size: 20px;
+    }
+
+    header img {
+        width: 15%;
+    }
+
+    .inputContainer {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .buttonContainer {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .buttonContainer button {
+        padding: 0px 20px;
     }
 }

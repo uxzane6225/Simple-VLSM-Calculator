@@ -4,46 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VLSM Calculator</title>
-    <link rel="icon" href="images/icon.ico" type="image/x-icon">
+    <link rel="icon" href="images/svlsmclogo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="parentContainer">
-        <h1>VLSM Calculator</h1>
-        <div class="inputting">
-            <div class="octets">
-
-            </div>
-            <h3>Enter the IP address and its subnet mask</h3>
-            <label>1st Octet: </label>
-            <input type="number" id="1stOctet" class="octet" max="255">
-            <label>2nd Octet: </label>
-            <input type="number" id="2ndOctet" class="octet" max="255">
-            <label>3rd Octet: </label>
-            <input type="number" id="3rdOctet" class="octet" max="255">
-            <label>4th Octet: </label>
-            <input type="number" id="4thOctet" class="octet" max="255"><br>
-            <label>Subnet Mask: /</label>
-            <input type="number" id="subnetMask">
-            <label>Requred Host: </label>
-            <input type="number" id="host"><br>
-            
-            <button id="submit">Submit</button>
-            <button id="clear">Clear</button>
+    <header>
+        <img src="images/svlsmclogo.png" alt="Simple VLSM Calculator Logo">
+        
+        <div id="instruction">
+            <h2>Instruction:</h2>
+            <ol>
+                <li>Fill in each octet from 0-255.</li>
+                <li>Fill in the subnet mask and the required host.</li>
+                <li>Press submit to see the results.</li>
+                <li>Press clear to make sure that the variables are cleared off and avoid stacking the previous results with the current.</li>
+            </ol>
         </div>
-    </div>
-    <hr>
-    <div class="result">
-        <h3>Result:</h3>
-        <p id="ipResult">IP Address:</p>
-        <p id="hostResult">Host:</p>
-        <p id="bits">Bits:</p>
-        <p id="nsm">New Subnet Mask:</p>
-        <p id="lsm">Long Subnet Mask:</p>
-        <p id="inc">Increment:</p>
-        <p id="1stRange">Range:</p>
-        <p id="nextIP">Next IP:</p>
-    </div>
+    </header>
+    <main>
+        <div class="parentContainer">
+            <h3>Enter the IP address with the subnet mask and a required host</h3>
+            <div class="inputContainer">
+                <div class="inputSection">
+                    <label>1st Octet: </label>
+                    <input type="number" id="1stOctet" class="octet" max="255">
+                </div>
+                <div class="inputSection">
+                    <label>2nd Octet: </label>
+                    <input type="number" id="2ndOctet" class="octet" max="255">
+                </div>
+                <div class="inputSection">
+                    <label>3rd Octet: </label>
+                    <input type="number" id="3rdOctet" class="octet" max="255">
+                </div>
+                <div class="inputSection">
+                    <label>4th Octet: </label>
+                    <input type="number" id="4thOctet" class="octet" max="255">
+                </div>
+                <div class="inputSection">
+                    <label>Subnet Mask: /</label>
+                    <input type="number" id="subnetMask">
+                </div>
+                <div class="inputSection">
+                    <label>Requred Host: </label>
+                    <input type="number" id="host"><br>
+                </div>   
+            </div>
+            <div class="buttonContainer">
+                <button id="submit">Submit</button>
+                <button id="clear">Clear</button>
+            </div>
+        </div>
+        <div id="result">
+            <h2>Result:</h2>
+            <p id="ipResult">IP Address:</p>
+            <p id="hostResult">Host:</p>
+            <p id="bits">Bits:</p>
+            <p id="nsm">New Subnet Mask:</p>
+            <p id="lsm">Long Subnet Mask:</p>
+            <p id="inc">Increment:</p>
+            <!--<p id="network">Network:</p>-->
+            <p id="range">Range:</p>
+            <p id="broadcast">Broadcast:</p>
+            <p id="nextIP">Next IP:</p>
+        </div>
+    </main>
+    <footer>
+        <p>Made by: uxzane6225 (Disclaimer: The calculator is inaccurate, don't use it for your studies).</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
